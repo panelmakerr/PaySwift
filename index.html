@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1.0"><title>payswift — Next-Gen Payment Infrastructure</title><link rel=preconnect href=https://fonts.googleapis.com><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel=stylesheet><style>
+:root{--accent:#D4A853;--accent2:#E8C87A;--accent3:#A0803A;--deep-navy:#2A2A2A;--dark-slate:#353535;--soft-cream:#E8E0D8;--muted-sage:#8A8278;--clay:var(--accent);--clay-light:var(--accent2);--clay-dark:var(--accent3);--code-green:#22C55E;--serif:'Space Grotesk',sans-serif;--sans:'Inter',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:linear-gradient(180deg,#2A2A2A 0%,#3A3A3A 100%);color:var(--soft-cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+::selection{background:var(--clay);color:var(--deep-navy)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--deep-navy)}
+::-webkit-scrollbar-thumb{background:var(--clay);border-radius:3px}
+.grad{background:linear-gradient(135deg,var(--clay),var(--clay-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
+.glass-card{background:rgba(34,34,34,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(196,122,78,0.08);border-radius:12px}
+.text-layer-3d{position:relative;display:inline-block}
+.text-layer-3d::before{content:attr(data-text);position:absolute;left:0;top:0;color:transparent;-webkit-text-stroke:1px rgba(196,122,78,0.15);z-index:-2;transform:translate(4px,4px)}
+.text-layer-3d::after{content:attr(data-text);position:absolute;left:0;top:0;color:transparent;-webkit-text-stroke:1px rgba(196,122,78,0.08);z-index:-1;transform:translate(2px,2px)}
+.perspective-1000{perspective:1000px}
+.preserve-3d{transform-style:preserve-3d}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;background:rgba(42,42,42,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(196,122,78,0.08);transform:translateY(-100%);transition:transform .7s cubic-bezier(.16,1,.3,1)}
+nav.show{transform:translateY(0)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--serif);font-size:clamp(18px,2vw,22px);font-weight:700;color:var(--soft-cream);text-decoration:none}
+.logo span{color:var(--clay)}
+.nav-links{display:flex;gap:clamp(16px,3vw,32px);list-style:none;align-items:center}
+.nav-links a{color:var(--muted-sage);text-decoration:none;font-size:clamp(12px,1vw,14px);font-weight:500;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--clay);transition:width .4s cubic-bezier(.16,1,.3,1)}
+.nav-links a:hover{color:var(--soft-cream)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:var(--clay);color:var(--soft-cream);padding:10px 24px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:600;transition:all .3s}
+.nav-cta:hover{background:var(--clay-light);transform:translateY(-1px);box-shadow:0 8px 30px rgba(196,122,78,0.3)}
+#particles-canvas{position:fixed;inset:0;pointer-events:none;z-index:1}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:80px;z-index:2}
+.hero-bg-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:var(--clay);opacity:.05;border-radius:50%;filter:blur(80px);pointer-events:none}
+.hero .container{position:relative;z-index:3;text-align:center;max-width:900px;perspective:2000px}
+.hero-tag{display:inline-block;font-size:clamp(11px,1vw,13px);font-weight:600;text-transform:uppercase;letter-spacing:.3em;color:var(--muted-sage);margin-bottom:clamp(16px,2vw,24px)}
+.hero h1{font-family:var(--serif);font-size:clamp(40px,7vw,80px);font-weight:700;line-height:.95;letter-spacing:-.03em;margin-bottom:clamp(16px,2vw,28px)}
+.hero p{font-size:clamp(15px,1.3vw,18px);color:var(--muted-sage);max-width:600px;line-height:1.7;margin:0 auto clamp(24px,3vw,40px)}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{display:inline-block;background:var(--clay);color:var(--soft-cream);padding:14px 36px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;transition:all .4s cubic-bezier(.16,1,.3,1)}.btn-primary:hover{transform:scale(1.05);box-shadow:0 10px 30px rgba(196,122,78,0.3)}
+.btn-secondary{display:inline-block;border:1px solid rgba(196,122,78,0.3);color:var(--soft-cream);padding:14px 36px;border-radius:999px;text-decoration:none;font-weight:500;font-size:15px;transition:all .4s cubic-bezier(.16,1,.3,1)}.btn-secondary:hover{background:rgba(196,122,78,0.1);transform:scale(1.05)}
+.code-floats{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.code-snip{position:absolute;background:rgba(53,53,53,0.7);backdrop-filter:blur(12px);padding:clamp(10px,1.2vw,16px);border-radius:10px;border:1px solid rgba(196,122,78,0.1);font-family:'JetBrains Mono','Fira Code',monospace;font-size:clamp(9px,.8vw,12px);color:var(--muted-sage);box-shadow:0 4px 20px rgba(0,0,0,.3);transform-style:preserve-3d;transition:all .5s;opacity:0}
+.code-snip.visible{opacity:.35}
+.code-snip:hover{opacity:.7;transform:scale(1.1) rotate(0deg)!important;z-index:10}
+.code-snip .green{color:var(--code-green)}.code-snip .clay{color:var(--clay)}.code-snip .comment{opacity:.5}
+.scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s ease 2s forwards}
+.scroll-mouse{width:22px;height:36px;border:2px solid rgba(232,224,216,0.2);border-radius:11px;display:flex;justify-content:center;padding-top:7px}
+.scroll-mouse::after{content:"";width:3px;height:7px;background:var(--soft-cream);border-radius:2px;animation:scrollBounce 2s ease-in-out infinite}
+.scroll-label{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted-sage);opacity:.5}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}
+@keyframes fadeIn{to{opacity:1}}
+section{padding:clamp(60px,8vw,120px) 0;position:relative;z-index:2}
+.section-label{font-size:clamp(11px,1vw,13px);font-weight:600;text-transform:uppercase;letter-spacing:.3em;color:var(--muted-sage);margin-bottom:12px}
+.section-title{font-family:var(--serif);font-size:clamp(28px,4vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.12;margin-bottom:16px}
+.section-sub{font-size:clamp(14px,1.2vw,17px);color:var(--muted-sage);max-width:560px;line-height:1.7}
+.section-header{text-align:center;margin-bottom:clamp(36px,5vw,60px)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(16px,2vw,24px)}
+.f-card{background:rgba(34,34,34,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(196,122,78,0.08);border-radius:12px;padding:clamp(24px,3vw,32px);transition:all .5s cubic-bezier(.16,1,.3,1);transform-style:preserve-3d;position:relative;overflow:hidden}
+.f-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--clay),transparent);opacity:0;transition:opacity .5s}
+.f-card:hover::before{opacity:1}
+.f-card:hover{transform:translateY(-8px) rotateX(2deg);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.f-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(196,122,78,0.1)}
+.f-card h3{font-size:clamp(16px,1.3vw,19px);font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+.f-card p{font-size:clamp(13px,1vw,15px);color:var(--muted-sage);line-height:1.7}
+.polaroid-section{background:rgba(53,53,53,.3);border-top:1px solid rgba(196,122,78,.05);border-bottom:1px solid rgba(196,122,78,.05)}
+.polaroid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:clamp(36px,5vw,60px);perspective:1200px}
+.polaroid{background:var(--dark-slate);padding:8px 8px 32px 8px;border-radius:3px;box-shadow:0 4px 20px rgba(0,0,0,.5);transform:rotate(var(--rot,0deg));transition:transform .4s cubic-bezier(.16,1,.3,1);transform-style:preserve-3d}
+.polaroid:hover{transform:rotate(0deg) scale(1.05);z-index:10}
+.polaroid-img{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--clay),var(--clay-light));border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.8}
+.polaroid-label{text-align:center;margin-top:12px;font-size:13px;font-weight:500;color:var(--soft-cream);font-family:var(--serif)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(16px,2vw,24px)}
+.t-card{background:rgba(34,34,34,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(196,122,78,0.08);border-radius:12px;padding:clamp(24px,3vw,32px);transition:all .4s cubic-bezier(.16,1,.3,1);transform-style:preserve-3d}
+.t-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.t-stars{color:#f5a623;font-size:14px;letter-spacing:2px;margin-bottom:12px}
+.t-card p{font-size:clamp(14px,1.1vw,16px);color:var(--soft-cream);line-height:1.7;margin-bottom:20px;font-style:italic;opacity:.9}
+.t-author strong{display:block;font-size:14px;font-weight:600}
+.t-author span{display:block;font-size:12px;color:var(--muted-sage);margin-top:2px}
+.cta{text-align:center}
+.cta .section-sub{margin:0 auto}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:clamp(24px,3vw,36px)}
+.backend-section{background:rgba(53,53,53,.5);border-top:1px solid rgba(196,122,78,.05)}
+.backend-toggle{display:inline-flex;align-items:center;gap:8px;color:var(--clay);font-size:14px;font-weight:600;cursor:pointer;padding:10px 20px;border-radius:999px;border:1px solid rgba(196,122,78,.2);background:rgba(196,122,78,.05);transition:all .3s;user-select:none}
+.backend-toggle:hover{background:rgba(196,122,78,.1)}
+.backend-toggle .arrow{display:inline-block;transition:transform .4s}
+.backend-toggle.open .arrow{transform:rotate(180deg)}
+.backend-content{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.16,1,.3,1)}
+.backend-content.open{max-height:600px}
+.backend-box{background:rgba(0,0,0,.3);border:1px solid rgba(196,122,78,.1);border-radius:12px;padding:24px;margin-top:20px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:13px;color:var(--muted-sage);line-height:1.8;white-space:pre-wrap;text-align:left;max-width:700px;margin-left:auto;margin-right:auto}
+.backend-box .hl{color:var(--code-green)}.backend-box .hl2{color:var(--clay)}.backend-box .green{color:var(--code-green);opacity:.7}
+footer{padding:40px 0;border-top:1px solid rgba(196,122,78,.05);text-align:center;z-index:2;position:relative}
+footer p{font-size:13px;color:var(--muted-sage)}
+footer a{color:var(--clay);text-decoration:none}
+.ray-marca{font-family:var(--serif);font-size:14px;color:var(--muted-sage);margin-top:8px;letter-spacing:.05em}
+.ray-marca span{color:var(--clay)}
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+.reveal-d4{transition-delay:.4s}
+.custom-cursor{width:8px;height:8px;background:var(--clay);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:width .2s,height .2s,background .2s;transform:translate(-50%,-50%)}
+.custom-cursor.hover{width:40px;height:40px;background:rgba(196,122,78,0.15);border:1px solid var(--clay)}
+@media(max-width:768px){.code-floats{display:none}.polaroid-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.polaroid-grid{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}}
+</style></head><body><div class=custom-cursor id=cursor></div><canvas id=particles-canvas></canvas><nav><div class=container><a href=# class=logo>⟡ <span>payswift</span></a><ul class=nav-links><li><a href=#features>Features</a></li><li><a href=#testimonials>Testimonials</a></li><li><a href=#cta class=nav-cta>Get Started</a></li></ul></div></nav><section class=hero><div class=hero-bg-glow></div><div class=code-floats><div class=code-snip style="left:6%;top:22%;rotate:-4deg"><span class=comment>// payswift</span><br><span class=clay>const tx = await</span></div><div class=code-snip style="right:8%;top:30%;rotate:3deg"><span class=comment>// optimized</span><br><span class=clay> processPayment(req, </span></div><div class=code-snip style="left:12%;bottom:25%;rotate:-2deg"><span class=comment>// payswift.core</span><br><span class=green> {"fraud_check":true});</span></div></div><div class=container><div class="hero-tag reveal">✦ Next-Gen Payment Infrastructure</div><h1 class=reveal>Payments That<br><span class=grad>Move at the Speed of Trust</span></h1><p class="reveal reveal-d1">Real-time settlement, intelligent fraud prevention, and a checkout so smooth customers won't think twice.</p><div class="hero-btns reveal reveal-d2"><a href=#cta class=btn-primary>Get Started →</a><a href=#features class=btn-secondary>Explore Features</a></div></div><div class=scroll-indicator><div class=scroll-mouse></div><span class=scroll-label>Scroll</span></div></section><section id=features><div class=container><div class=section-header><div class="section-label reveal">✦ Features</div><h2 class="section-title reveal">Built for<br><span class=text-layer-3d data-text="Performance">Performance</span></h2><p class="section-sub reveal reveal-d1" style="margin:0 auto">Every feature engineered to deliver measurable results from day one.</p></div><div class=features-grid><div class="f-card reveal"><div class=f-icon>⚡</div><h3>Instant Settlements</h3><p>Real-time processing with next-day settlement. Your cash flow never sleeps.</p></div><div class="f-card reveal reveal-d1"><div class=f-icon>🛡️</div><h3>AI Fraud Shield</h3><p>ML models that detect and block fraud in under 50ms.</p></div><div class="f-card reveal reveal-d2"><div class=f-icon>🌍</div><h3>Global Reach</h3><p>135+ currencies, 40+ payment methods. Accept payments worldwide.</p></div><div class="f-card reveal reveal-d3"><div class=f-icon>📊</div><h3>Smart Reconciliation</h3><p>Automated matching with 99.99% accuracy. Close books in minutes.</p></div></div></div></section><section class=polaroid-section><div class=container><div class=section-header><div class="section-label reveal">✦ Showcase</div><h2 class="section-title reveal">See It<br>in Action</h2></div><div class=polaroid-grid><div class=polaroid style="--rot:-3deg"><div class=polaroid-img>⚡</div><div class=polaroid-label>Dashboard</div></div><div class=polaroid style="--rot:2deg"><div class=polaroid-img>🎯</div><div class=polaroid-label>Analytics</div></div><div class=polaroid style="--rot:-1deg"><div class=polaroid-img>🚀</div><div class=polaroid-label>Performance</div></div></div></div></section><section id=testimonials><div class=container><div class=section-header><div class="section-label reveal">✦ Testimonials</div><h2 class="section-title reveal">Trusted by<br><span class=text-layer-3d data-text="Industry Leaders">Industry Leaders</span></h2><p class="section-sub reveal reveal-d1" style="margin:0 auto">Hear from teams already transforming their businesses.</p></div><div class=testimonials-grid><div class="t-card reveal"><div class=t-stars>★★★★★</div><p>"PaySwift saved us $2M in chargebacks in our first year."</p><div class=t-author><strong>Alexandre Dubois</strong><span>CFO, EuroMart Online</span></div></div><div class="t-card reveal reveal-d1"><div class=t-stars>★★★★★</div><p>"The API docs are the cleanest I have ever worked with. Integrated in 2 days."</p><div class=t-author><strong>Yuki Tanaka</strong><span>Lead Engineer, FinFlow</span></div></div><div class="t-card reveal reveal-d2"><div class=t-stars>★★★★★</div><p>"Multi-currency was seamless. International revenue grew 180%."</p><div class=t-author><strong>Grace Osei</strong><span>CEO, AfriTrade</span></div></div></div></div></section><section id=cta class=cta><div class=container><div class="section-label reveal">✦ Get Started</div><h2 class="section-title reveal">Future-Ready Payments</h2><p class="section-sub reveal reveal-d1" style="margin:0 auto">Join 10,000+ businesses processing billions with PaySwift.</p><div class="cta-btns reveal reveal-d2"><a href=# class=btn-primary>Start Free Trial →</a><a href=# class=btn-secondary>Talk to Sales</a></div></div></section><section class=backend-section><div class=container><div class=section-header><div class="section-label reveal">⚙️ Architecture</div><h2 class="section-title reveal">Backend<br><span class=text-layer-3d data-text="Stack">Stack</span></h2><p class="section-sub reveal reveal-d1" style="margin:0 auto">Recommended production infrastructure for payswift.</p></div><div class="reveal reveal-d2" style=text-align:center><div class=backend-toggle id=backendToggle><span>View Architecture</span><span class=arrow>▼</span></div></div><div class=backend-content id=backendContent><div class=backend-box><span class=hl>// Backend Architecture for PaySwift</span><span class=hl2>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span><span class=green>•</span> API: Go / Node.js — high-throughput transaction processing
+<span class=green>•</span> Database: PostgreSQL (Supabase) + Redis — accounts, txns, ledgers
+<span class=green>•</span> Auth: Supabase Auth — merchant + customer roles, 2FA
+<span class=green>•</span> Stripe Connect / Plaid — ACH, cards, wire transfers
+<span class=green>•</span> Sift / custom ML model — real-time risk scoring
+<span class=green>•</span> Inngest / Bull — async settlement, notifications
+<span class=green>•</span> KYC/KYB (Persona/Onfido), audit trails
+<span class=green>•</span> Materialized views + cron jobs for daily ledgers
+<span class=green>•</span> Svix — real-time webhook delivery to merchants
+<span class=green>•</span> Supabase Storage — receipts, invoices (encrypted)
+<span class=hl2>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span><span class=hl>Hosting:</span> Vercel (frontend) + dedicated backend
+</div></div></div></section><footer><div class=container><p>© 2026 <a href=https://github.com/panelmakerr/payswift>payswift</a>. All rights reserved.</p><div class=ray-marca>Built by <span>Raymora</span> — Premium Web Engineering</div></div></footer><script>
+var cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',function(e){cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+document.querySelectorAll('a,button,.f-card,.t-card,.polaroid').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.classList.add('hover')});el.addEventListener('mouseleave',function(){cursor.classList.remove('hover')})});
+setTimeout(function(){document.querySelector('nav').classList.add('show')},800);
+var c=document.getElementById('particles-canvas'),ctx=c.getContext('2d');
+var W,H,particles,mX=-1e3,mY=-1e3;
+function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+var count=Math.min(80,Math.floor((W*H)/15000));
+particles=[];for(var i=0;i<count;i++){particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,size:Math.random()*2+1,opacity:Math.random()*.4+.1})}
+window.addEventListener('mousemove',function(e){mX=e.clientX;mY=e.clientY});
+function draw(){ctx.clearRect(0,0,W,H);for(var i=0;i<particles.length;i++){var p=particles[i];var dX=mX-p.x,dY=mY-p.y,dist=Math.sqrt(dX*dX+dY*dY);if(dist<150){p.vx-=dX/dist*.02;p.vy-=dY/dist*.02}p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;p.vx*=.999;p.vy*=.999;for(var j=i+1;j<particles.length;j++){var p2=particles[j];var dX=p.x-p2.x,dY=p.y-p2.y,d=Math.sqrt(dX*dX+dY*dY);if(d<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle='rgba(196,122,78,'+((1-d/120)*0.15)+')';ctx.lineWidth=.5;ctx.stroke()}}ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='rgba(196,122,78,'+p.opacity+')';ctx.fill()}requestAnimationFrame(draw)}
+draw();
+var obs=new IntersectionObserver(function(e){e.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+var codeObs=new IntersectionObserver(function(e){e.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');codeObs.unobserve(entry.target)}})},{threshold:.1});
+document.querySelectorAll('.code-snip').forEach(function(el){codeObs.observe(el)});
+document.getElementById('backendToggle').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('backendContent').classList.toggle('open')});
+document.querySelectorAll('.f-card').forEach(function(card){card.addEventListener('mousemove',function(e){var r=card.getBoundingClientRect();var x=e.clientX-r.left,y=e.clientY-r.top;var rx=(y-r.height/2)/r.height/2*8,ry=(r.width/2-x)/r.width/2*8;card.style.transform='translateY(-8px) rotateX('+rx+'deg) rotateY('+ry+'deg)'});card.addEventListener('mouseleave',function(){card.style.transform='translateY(-8px) rotateX(2deg)'})});
+</script></body></html>

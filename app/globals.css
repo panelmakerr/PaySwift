@@ -1,0 +1,3 @@
+@import "tailwindcss";
+@theme { --color-primary: #D4A853; --font-sans: "Inter", sans-serif; --font-serif: "Space Grotesk", sans-serif; }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
